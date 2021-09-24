@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
+//@AllArgsConstructor
 public class UserService {
-
-//    @Autowired
-//    private UserMapper userMapper;
 
     @Autowired
     private UserDao userDao;
