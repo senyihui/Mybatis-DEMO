@@ -15,6 +15,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/api/v1")
 @AllArgsConstructor
 public class UserController {
+
     private UserService userService;
 
     @PostMapping("/create")
