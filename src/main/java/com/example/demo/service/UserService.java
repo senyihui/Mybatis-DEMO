@@ -8,14 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@AllArgsConstructor
 public class UserService {
 
     @Autowired
     private UserDao userDao;
-
-//    @Value("${demo.test.value}")
-//    private String value;
 
     public List<User> getAllUsers() {
         return userDao.getAllUsers();

@@ -16,10 +16,4 @@
         <property name="queueCapacity" value="1500" />
     </bean>
 
-    <bean id="UserService" class="com.example.demo.service.UserService">
-    </bean>
-
-<!--    <bean id="UserController" class="com.example.demo.controller.UserController">-->
-<!--        <property name="userService" ref="UserService"></property>-->
-<!--    </bean>-->
 </beans>
