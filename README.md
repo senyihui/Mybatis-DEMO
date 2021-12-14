@@ -1,23 +1,57 @@
-### basic CURD function
+## ShardingSphere
 
-参考：https://www.liaoxuefeng.com/wiki/1252599548343744/1331313418174498
+### Dependency
+```xml
+<dependency>
+    <groupId>org.mybatis.spring.boot</groupId>
+    <artifactId>mybatis-spring-boot-starter</artifactId>
+    <version>2.0.1</version>
+</dependency>
 
-### xml配置
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.25</version>
+</dependency>
 
-* 注意点
+<dependency>
+    <groupId>org.apache.shardingsphere</groupId>
+    <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+    <version>4.1.1</version>
+</dependency>
 
-  1. `application.properties`中切记：
+<dependency>
+    <groupId>com.zaxxer</groupId>
+    <artifactId>HikariCP</artifactId>
+    <version>4.0.3</version>
+</dependency>
+```
 
-     ```properties
-     #================== mybatis =====================#
-     #映射文件路径
-     mybatis.mapper-locations=classpath:mybatis/mapper/*Dao.xml
-     #指定mybatis生成包
-     mybatis.type-aliases-package=com.example.demo.dao.*
-     #指定mybatis配置文件路径
-     mybatis.config-location=classpath:mybatis/mybatis-config.xml
-     ```
+### application.properties
+```.properties
+spring.shardingsphere.datasource.names=ds
+# 配置第一个数据库
+spring.shardingsphere.datasource.ds.type=com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.ds.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.shardingsphere.datasource.ds.jdbc-url=jdbc:mysql://localhost:3306/mybatis_demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true
+spring.shardingsphere.datasource.ds.username=root
+spring.shardingsphere.datasource.ds.password=passward
 
-  2. SpringBoot启动类添加`@MapperScan`
+# 配置分库策略（此处没用）
+# spring.shardingsphere.sharding.tables.users.database-strategy.standard.sharding-column=id
+# 自定义分库策略
+# spring.shardingsphere.sharding.tables.users.database-strategy.standard.precise-algorithm-class-name=com.example.test.config.MyDbPreciseShardingAlgorithm
 
-  3. 插件使用：Free Mybatis plugin
+# 配置users的分表策略
+spring.shardingsphere.sharding.tables.users.actual-data-nodes=ds.users_$->{0..1}
+spring.shardingsphere.sharding.tables.users.table-strategy.standard.sharding-column=id
+# 自定义分表策略
+spring.shardingsphere.sharding.tables.users.table-strategy.standard.precise-algorithm-class-name=com.example.demo.config.MyTablePreciseShardingAlgorithm
+
+# 添加users表的id生成策略
+spring.shardingsphere.sharding.tables.users.key-generator.column=id
+spring.shardingsphere.sharding.tables.users.key-generator.type=SNOWFLAKE
+
+# 打开sql输出日志
+spring.shardingsphere.props.sql.show=true
+```

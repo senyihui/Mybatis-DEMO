@@ -10,9 +10,6 @@ import java.util.List;
 @Service
 public class UserService {
 
-//    @Autowired
-//    private UserMapper userMapper;
-
     @Autowired
     private UserDao userDao;
 
