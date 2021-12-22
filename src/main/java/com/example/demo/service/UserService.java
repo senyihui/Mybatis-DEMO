@@ -25,6 +25,10 @@ public class UserService {
         return userDao.getUserById(id);
     }
 
+    public User getUserByStringId(String id) {
+        return userDao.getUserById(Long.parseLong(id));
+    }
+
     public void createUser(User user) {
         userDao.create(user);
     }
