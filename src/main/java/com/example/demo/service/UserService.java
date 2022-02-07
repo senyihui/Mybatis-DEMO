@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.common.SysLog;
 import com.example.demo.dao.UserDao;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@AllArgsConstructor
-public class UserService {
+public class UserService implements IUserService {
 
     @Autowired
     private UserDao userDao;
-
-//    @Value("${demo.test.value}")
-//    private String value;
 
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 
+    @Override
+    @SysLog("log info defined in annotation")
     public User getUserById(Long id) {
         return userDao.getUserById(id);
     }

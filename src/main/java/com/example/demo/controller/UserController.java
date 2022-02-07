@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.service.IUserService;
 import com.example.demo.service.UserService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,13 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/v1")
-@AllArgsConstructor
 public class UserController {
 
+    @Autowired
     private UserService userService;
+
+    @Autowired
+    private IUserService iUserService; // 测试动态代理
 
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody User user) {
@@ -29,10 +33,16 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/iuser/{userId}")
+    public User getUserByIdInterface(@PathVariable Long userId) {
+        return iUserService.getUserById(userId);
+    }
+
     @GetMapping("/user/{userId}")
     public User getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
     }
+
 
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<String> deleteUserById(@PathVariable Long userId) {

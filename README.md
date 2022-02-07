@@ -1,23 +1,17 @@
-### basic CURD function
+## AspectJ
+Spring AspectJ AOP implementation provides many annotations:
 
-参考：https://www.liaoxuefeng.com/wiki/1252599548343744/1331313418174498
+* `@Aspect` declares the class as aspect.
+* `@Pointcut` declares the pointcut expression.
 
-### xml配置
+The annotations used to create advices are given below:
 
-* 注意点
+* `@Before` declares the before advice. It is applied before calling the actual method.
+* `@After` declares the after advice. It is applied after calling the actual method and before returning result.
+* `@AfterReturning` declares the after returning advice. It is applied after calling the actual method and before returning result. **But you can get the result value in the advice.**
+* `@Around` declares the around advice. It is applied before and after calling the actual method.
+* `@AfterThrowing` declares the throws advice. It is applied if actual method throws exception.
 
-  1. `application.properties`中切记：
-
-     ```properties
-     #================== mybatis =====================#
-     #映射文件路径
-     mybatis.mapper-locations=classpath:mybatis/mapper/*Dao.xml
-     #指定mybatis生成包
-     mybatis.type-aliases-package=com.example.demo.dao.*
-     #指定mybatis配置文件路径
-     mybatis.config-location=classpath:mybatis/mybatis-config.xml
-     ```
-
-  2. SpringBoot启动类添加`@MapperScan`
-
-  3. 插件使用：Free Mybatis plugin
+示例中：
+* `UserServiceAspect`是对方法的切面处理
+* `SysLogAspect`是对注解的切面处理
