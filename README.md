@@ -1,23 +1,42 @@
-### basic CURD function
+## [Jacoco测试接口覆盖率](http://blog.kail.xyz/post/2018-09-24/qa/jacoco-simple.html)
 
-参考：https://www.liaoxuefeng.com/wiki/1252599548343744/1331313418174498
+通过在JVM启动参数中加入`-javaagent`参数指定 JaCoCo 的代理程序，在Class Loader装载一个class前将统计代码插入class文件，达到在执行测试代码或者人工功能测试的时候，实时统计覆盖率的目的。
 
-### xml配置
+### JVM配置Agent
 
-* 注意点
+```xml
+-javaagent:C:\Users\SN\IdeaProjects\Mybatis-DEMO\opt\jacocoagent.jar=includes=com.example.demo.*,output=tcpserver,address=127.0.0.1,port=8110
+```
 
-  1. `application.properties`中切记：
+### Dump报告数据
 
-     ```properties
-     #================== mybatis =====================#
-     #映射文件路径
-     mybatis.mapper-locations=classpath:mybatis/mapper/*Dao.xml
-     #指定mybatis生成包
-     mybatis.type-aliases-package=com.example.demo.dao.*
-     #指定mybatis配置文件路径
-     mybatis.config-location=classpath:mybatis/mybatis-config.xml
-     ```
+```
+java -jar jacococli.jar dump --address 127.0.0.1 --port 8110 --destfile C:/Users/SN/IdeaProjects/Mybatis-DEMO/opt/jacoco.exec
+```
 
-  2. SpringBoot启动类添加`@MapperScan`
+### 生成报告
 
-  3. 插件使用：Free Mybatis plugin
+```
+java -jar jacococli.jar \
+# 指定报告数据文件的路径
+report C:/Users/SN/IdeaProjects/Mybatis-DEMO/opt/jacoco.exec \
+# 指定项目编译后的 class 文件路径
+--classfiles C:/Users/SN/IdeaProjects/Mybatis-DEMO/target/classes \
+# 指定生成 HTML 报告路径
+--html C:/Users/SN/IdeaProjects/Mybatis-DEMO/opt \
+#指定源码路径（如果不指定无只能看到类和方法的覆盖率，没办法看到具体业务逻辑的服务概率）
+--sourcefiles C:/Users/SN/IdeaProjects/Mybatis-DEMO/src/main/java \
+# 指定编码方式
+--encoding utf-8
+# 指定报告名称
+--name Mybatis-DEMO-Report
+
+java -jar jacococli.jar \
+report C:/Users/SN/IdeaProjects/Mybatis-DEMO/opt/jacoco.exec \
+--classfiles C:/Users/SN/IdeaProjects/Mybatis-DEMO/target/classes \
+--html C:/Users/SN/IdeaProjects/Mybatis-DEMO/opt \
+--sourcefiles C:/Users/SN/IdeaProjects/Mybatis-DEMO/src/main/java \
+--encoding utf-8
+--name Mybatis-DEMO-Report
+```
+
